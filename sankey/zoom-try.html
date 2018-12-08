@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" id="bootstrap-css">
+	
+	<script src="http://d3js.org/d3.v3.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/Caged/d3-tip/896d387c653b4d73cea9cdd0740aa8794754417a/index.js"></script>
+
+	<!-- Get inicial sample from http://jsfiddle.net/QwMPS/ --> 
+	<script src="d3sankey.js"></script> 
+
+    <style type="text/css">
+		svg text {
+			font-size: 14px;
+			stroke-width: 0;
+			fill: black;
+		}
+		html, body {
+			font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif;
+			justify-content: center;
+			align-items: center;
+			font-size: 12px;
+			overflow: hidden;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+		}
+		.sankeybox {
+			display: flex;
+			flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+		.sankey .node text {
+			pointer-events: none;
+		}
+		.sankey .link {
+			fill: none;
+			stroke: #000;
+			stroke-opacity: .16;
+			transition-property: stroke-opacity;
+			transition-duration: 0.5s;
+		}
+		.sankey .link:hover {
+			stroke-opacity: .5;
+		}
+
+		h1, h2, h3 {
+			line-height: 12px !important;
+		}
+		.d3-tip h1 {
+			font-size: 14px;
+			padding: 0;
+			margin-bottom: 5px;
+			width: 100%;
+		}
+		.d3-tip h2 {
+			font-weight: bold;
+			font-size: 12px;
+			padding-right: inherit;
+			padding-left: inherit;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			margin: 0px;
+		}
+		.d3-tip h3 {
+			font-weight: normal;
+			font-size: 8px;
+			margin: 0;
+			padding: 0;
+		}
+		.d3-tip table {
+			font-weight: normal;
+			font-size: 12px;
+			padding: none;
+			margin: 0;
+			width: 100%;
+			border: none;
+			border-collapse: collapse;
+		}
+		.d3-tip td {
+			padding-top: 2px;
+			padding-bottom: 2px;
+		}
+		.d3-tip .col-left {
+			padding-right: 8px;
+		}
+		.d3-tip .table-wrapper {
+			margin: 0;
+			padding: inherit;
+			border: none;
+		}
+		.d3-tip {
+			line-height: 1;
+			font-weight: normal;
+			padding: 4px;
+			background: white;
+			color: black;
+			border-radius: 2px;
+			pointer-events: none;
+			background:  white;
+			box-shadow: 1px 1px 4px grey;
+		}
+    </style>	
+
+	<style>
+		.node rect {
+		  cursor: move;
+		  fill-opacity: .9;
+		  shape-rendering: crispEdges;
+		}
+		.node text {
+		  pointer-events: none;
+		  text-shadow: 0px 0px 13px #fff;
+		}
+		.node:hover {
+			stroke-opacity: .2;
+		}
+		.link {
+		  fill: none;
+		  stroke: #000;
+		  stroke-opacity: .16;
+		  transition-property: stroke-opacity;
+		  transition-duration: 0.5s;
+		}
+		.link:hover {
+		  stroke-opacity: .5;
+		}
+
+	</style>
+	<style>
+	
+	.d3-zoom-controls {
+	  position: absolute;
+	  left: 15px;
+	  top: 10px;
+	}
+	
+	.d3-zoom-controls .btn-circle {
+	  width: 30px;
+	  height: 30px;
+	  align-items: center;
+	  padding: 0px 0;
+	  font-size: 18px;
+	  line-height: 2.00;
+	  display: grid;
+	  border-radius: 30px;
+	  background: rgba(255, 255, 255, 0.7);
+	  color: gray;
+	  margin-top: 10px;
+	}
+	
+	</style>
+	<body>
+		<div id="sankey" class="sankeybox">
+			<div class="d3-zoom-controls">
+			  <a data-zoom="+0.5" class="btn btn-circle"><span class="fa fa-plus"></span></a>
+			  <a data-zoom="-0.5" class="btn btn-circle"><span class="fa fa-minus"></span></a>
+			  <a data-zoom="0"    class="btn btn-circle"><span class="fa fa-crosshairs"></span></a>
+			</div>
+		</div>
+
+		<script>
+		var zoom = {};
+		var drag = {};
+		var svg = {};
+
+		
+		//Zoom function:
+		//Programmatic Pan+Zoom III (Mike Bostock’s Block 7ec977c95910dd026812)
+		//https://bl.ocks.org/mbostock/7ec977c95910dd026812
+		d3.selectAll("a[data-zoom]").on("click", clicked);
+		function clicked() {
+			var valueZoom = this.getAttribute("data-zoom");
+			if (valueZoom != 0)
+			{
+			   svg.call(zoom);
+			  // Record the coordinates (in data space) of the center (in screen space).
+			  var center0 = zoom.center(), translate0 = zoom.translate(), coordinates0 = coordinates(center0);
+			  zoom.scale(zoom.scale() * Math.pow(2, +valueZoom));
+
+			  // Translate back to the center.
+			  var center1 = point(coordinates0);
+			  zoom.translate([translate0[0] + center0[0] - center1[0], translate0[1] + center0[1] - center1[1]]);
+
+			  svg.transition().duration(750).call(zoom.event);
+			} else {
+				fitZoom();
+			}
+		}
+
+		function fitZoom()
+		{
+			svg.transition().duration(500).call(zoom.translate([20,10]).scale(1).event);
+		}
+		
+		function coordinates(point) {
+		  var scale = zoom.scale(), translate = zoom.translate();
+		  return [(point[0] - translate[0]) / scale, (point[1] - translate[1]) / scale];
+		}
+
+		function point(coordinates) {
+		  var scale = zoom.scale(), translate = zoom.translate();
+		  return [coordinates[0] * scale + translate[0], coordinates[1] * scale + translate[1]];
+		}
+				  
+		function showSankey(energy)
+		{
+			$('.d3-tip-nodes').remove(); //clear olds tips
+			var chartBox = d3.select("#sankey").node().getBoundingClientRect();
+			var margin = {top: 10, right: 10, bottom: 10, left: 20},
+			width = chartBox.width - chartBox.left - margin.left - margin.right,
+			height = chartBox.height - chartBox.top  - margin.top - margin.bottom;
+			
+		  var linkTooltipOffset = 72,
+			  nodeTooltipOffset = 130;
+			  
+		  //Tooltip function:
+		  //D3 sankey diagram with view options (Austin Czarnecki’s Block cc6371af0b726e61b9ab)
+		  //https://bl.ocks.org/austinczarnecki/cc6371af0b726e61b9ab
+		  var tipLinks = d3.tip()
+			  .attr('class', 'd3-tip')
+			  .offset([-10,0]);
+
+		  var tipNodes = d3.tip()
+			  .attr('class', 'd3-tip d3-tip-nodes')
+			  .offset([-10, 0]);
+			
+			
+		  function formatAmount(val) {
+			  //return val.toLocaleString("en-US", {style: 'currency', currency: "USD"}).replace(/\.[0-9]+/, "");
+			  return parseFloat(val);
+		  };
+			  
+			// "➡" 
+			tipLinks.html(function(d) {
+			  var title, candidate;
+			  if (energy.links.indexOf(d.source.name) > -1) {
+				candidate = d.source.name;
+				title = d.target.name;
+			  } else {
+				candidate = d.target.name;
+				title = d.source.name;
+			  }
+				var html =  '<div class="table-wrapper">'+
+					'<h1>'+title+'</h1>'+
+					'<table>'+
+						'<tr>'+
+							'<td class="col-left">'+candidate+'</td>'+
+							'<td align="right">'+formatAmount(d.value)+'</td>'+
+						'</tr>'+
+					'</table>'+
+					'</div>';
+			  return html;
+			});
+
+			tipNodes.html(function(d) {
+			  var object = d3.entries(d),
+				  nodeName = object[1].value,
+				  linksTo = object[3].value,
+				  linksFrom = object[4].value,
+				  html;
+
+			  html =  '<div class="table-wrapper">'+
+					  '<h1>'+nodeName+'</h1>'+
+					  '<table>';
+			  if (linksFrom.length > 0 & linksTo.length > 0) {
+				html+= '<tr><td><h2>Input:</h2></td><td></td></tr>'
+			  }
+			  for (i = 0; i < linksFrom.length; ++i) {
+				html += '<tr>'+
+				  '<td class="col-left">'+linksFrom[i].source.name+'</td>'+
+				  '<td align="right">'+formatAmount(linksFrom[i].value)+'</td>'+
+				'</tr>';
+			  }
+			  if (linksFrom.length > 0 & linksTo.length > 0) {
+				html+= '<tr><td><h2>Output:</h2></td><td></td></tr>'
+			  }
+			  for (i = 0; i < linksTo.length; ++i) {
+				html += '<tr>'+
+						  '<td class="col-left">'+linksTo[i].target.name+'</td>'+
+						  '<td align="right">'+formatAmount(linksTo[i].value)+'</td>'+
+						'</tr>';
+			  }
+			  html += '</table></div>';
+			  return html;
+			});
+			
+			function zoomed() {
+			  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+			}
+
+			function dragstarted(d) {
+			  d3.select(this).classed("dragging", true);
+			}
+
+			function dragged(d) {
+			  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+			}
+
+			function dragended(d) {
+			  d3.select(this).classed("dragging", false);
+			}	
+			
+			drag = d3.behavior.drag()
+			.origin(function(d) { return d; })
+			.on("dragstart", dragstarted)
+			.on("drag", dragged)
+			.on("dragend", dragended);
+			
+			zoom = d3.behavior.zoom()
+				.scaleExtent([0, 5])
+				.center([width / 2, height / 2])
+				.on("zoom", zoomed);
+			
+		var formatNumber = d3.format(",.0f"),
+			format = function(d) { return formatNumber(d) + " $"; },
+			color = d3.scale.category20();
+		
+		svg = d3.select("#sankey").append("svg")
+			.attr("width", width + chartBox.left + margin.left + margin.right)
+			.attr("height", height + chartBox.top + margin.top + margin.bottom)
+			.call(zoom)
+			.call(tipLinks)
+			.call(tipNodes)
+		  .append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var sankey = d3sankey()
+			.nodeWidth(40)
+			.nodePadding(15)
+			.size([width, height]);
+
+		var path = sankey.link();
+		  sankey
+			  .nodes(energy.nodes)
+			  .links(energy.links)
+			  .layout(32);
+
+		var fontScale = d3.scale.linear().domain(d3.extent(energy.nodes, function(d) { return d.value })).range([18, 30]);
+
+		  var link = svg.append("g").selectAll(".link")
+			  .data(energy.links)
+			.enter().append("path")
+			  .attr("class", "link")
+			  .attr("d", path)
+			  .style("stroke", function(d){ return d.source.color; })
+			  .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+			  .sort(function(a, b) { return b.dy - a.dy; })
+			  .on('mousemove', function(event) {
+				tipLinks
+				  .style("top", (d3.event.pageY - linkTooltipOffset) + "px")
+				  .style("left", function () {
+					var left = (Math.max(d3.event.pageX - linkTooltipOffset, 10)); 
+					left = Math.min(left, window.innerWidth - $('.d3-tip').width() - 20)
+					return left + "px"; })
+				})
+			  .on('mouseover', tipLinks.show)
+			  .on('mouseout', tipLinks.hide);
+			  
+		  var node = svg.append("g").selectAll(".node")
+			  .data(energy.nodes)
+			.enter().append("g")
+			  .attr("class", "node")
+			  .attr("transform", function(d) {
+				  return "translate(" + d.x + "," + d.y + ")";
+			  })
+			.on('mousemove', function(event) {
+				tipNodes
+				  .style("top", (d3.event.pageY - $('.d3-tip-nodes').height() - 20) + "px")
+				  .style("left", function () {
+					var left = (Math.max(d3.event.pageX - nodeTooltipOffset, 10)); 
+					left = Math.min(left, window.innerWidth - $('.d3-tip').width() - 20)
+					return left + "px"; })
+				})
+			.on('mouseover', tipNodes.show)
+			.on('mouseout', tipNodes.hide)
+			.call(d3.behavior.drag()
+			  .origin(function(d) { return d; })
+			  .on("dragstart", function() { 
+				d3.event.sourceEvent.stopPropagation();  //Disable drag sankey on node select
+				this.parentNode.appendChild(this); })
+			  .on("drag", dragmove));
+
+		  node.append("rect")
+			  .attr("height", function(d) { return d.dy; })
+			  .attr("width", sankey.nodeWidth())
+			  .style("fill", function(d) {
+				  if (d.color == undefined)
+					return d.color = color(d.name.replace(/ .*/, "")); //get new color if node.color is null
+				  return d.color;
+			  })
+			  .style("stroke", function(d) { return d3.rgb(d.color).darker(2); });
+
+		  node.append("text")
+			  .attr("class","nodeValue")
+			  .text(function(d) { return d.name + "\n" + format(d.value); });
+
+		  node.selectAll("text.nodeValue")
+			  .attr("x", sankey.nodeWidth() / 2)
+			  .attr("y", function (d) { return (d.dy / 2) })
+			  .text(function (d) { return formatNumber(d.value); })
+			  .attr("dy", 5)
+			  .attr("text-anchor", "middle");
+
+		  node.append("text")
+			  .attr("class","nodeLabel")
+			  .style("fill", function(d) {
+					return d3.rgb(d.color).darker(2.4);
+			  })
+			  .style("font-size", function(d) {
+					return fontScale(d.value) + "px";
+			  });
+			  
+		  node.selectAll("text.nodeLabel")	
+			  .attr("x", -6)
+			  .attr("y", function(d) { return d.dy / 2; })
+			  .attr("dy", ".35em")
+			  .attr("text-anchor", "end")
+			  .attr("transform", null)
+			  .text(function(d) { return d.name; })
+			.filter(function(d) { return d.x < width / 2; })
+			  .attr("x", 6 + sankey.nodeWidth())
+			  .attr("text-anchor", "start");
+			function dragmove(d) {
+				d3.select(this)
+					.attr("transform", "translate(" + d.x + "," +
+					   (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
+				sankey.relayout();
+				link.attr("d", path);
+			};
+
+			fitZoom();
+		}
+
+		function getData() {
+			return {
+			// 	"nodes": [{
+			// 	"node": 0,
+			// 	"name": "node0",
+			// 	color: "#1f77b4"
+			// }, {
+			// 	"node": 1,
+			// 	"name": "node1",
+			// 	color:"#aec7e8"
+			// }, {
+			// 	"node": 2,
+			// 	"name": "node2",
+			// 	color: "#ff7f0e"
+			// }, {
+			// 	"node": 3,
+			// 	"name": "node3",
+			// 	color: "#ffbb78"
+			// }, {
+			// 	"node": 4,
+			// 	"name": "node4",
+			// 	color: "#2ca02c"
+			// }, {
+			// 	"node": 5,
+			// 	"name": "node5",
+			// 	color: "#98df8a"
+			// }, {
+			// 	"node": 6,
+			// 	"name": "node6",
+			// 	color: "#d62728"
+			// }, {
+			// 	"node": 7,
+			// 	"name": "node7",
+			// 	color: "#ff9896"
+			// }],
+
+		   "nodes": [
+			   {"node": 0, "name":'Pre-Test'},
+		       {"node": 1, "name":'Introduction'},
+		       {"node": 2, "name":'Iterative algorithms'},
+		       {"node": 3, "name":'While loops'},
+		       {"node": 4, "name":'For loops'},
+		       {"node": 5, "name":'Lists'},
+		       {"node": 6, "name":'Nested loops'},
+		       {"node": 7, "name":'Time-efficiency'},
+		       {"node": 8, "name": 'Making Decisions'},
+		       {"node": 9, "name":'Iterations + Decisions'},
+		       {"node": 10, "name":'Recursion'},
+		       {"node": 11, "name":'Encryption'}, 
+		       {"node": 12, "name":'Data Structures'},
+		       {"node": 13, "name":'Post-Test'},
+		       {"node": 14, "name": 'Data Representation'},
+		       {"node": 15, "name":'Logic'},
+		       {"node": 16, "name": 'Computability'},
+		       {"node": 17, "name":'Concurrency'},
+		       {"node": 18, "name":'Common Errors'}
+	       ],
+
+	       "links": [
+       {"source":0,"target":1,"value":42},
+       {"source":1,"target":2,"value":41},
+       {"source":2,"target":3,"value":39},
+       {"source":3,"target":4,"value":39},
+       {"source":4,"target":5,"value":36},
+       {"source":5,"target":6,"value":33},
+       {"source":6,"target":7,"value":32},
+       {"source":7,"target":8,"value":31},
+       {"source":8,"target":9,"value":33},
+       {"source":9,"target":10,"value":33},
+       {"source":10,"target":11,"value":1},
+       {"source":10,"target":12,"value":27},
+       {"source":12,"target":13,"value":15},
+       {"source":13,"target":14,"value":13},
+      //  {"source":14,"target":11,"value":18},
+       {"source":10,"target":13,"value":6},
+      //  {"source":13,"target":12,"value":4},
+       {"source":12,"target":14,"value":16},
+       {"source":1,"target":8,"value":1},
+       {"source":4,"target":6,"value":1},
+      //  {"source":7,"target":5,"value":1},
+       {"source":5,"target":9,"value":1},
+      //  {"source":9,"target":8,"value":5},
+       {"source":8,"target":13,"value":1},
+       {"source":9,"target":13,"value":1},
+       {"source":5,"target":7,"value":4},
+       {"source":7,"target":9,"value":11},
+       {"source":9,"target":12,"value":5},
+      //  {"source":12,"target":11,"value":3},
+       {"source":8,"target":10,"value":3},
+       {"source":14,"target":15,"value":5},
+      //  {"source":15,"target":11,"value":5},
+       {"source":11,"target":16,"value":19},
+      //  {"source":1,"target":0,"value":2},
+       {"source":0,"target":5,"value":1},
+       {"source":9,"target":14,"value":1},
+       {"source":8,"target":11,"value":1},
+      //  {"source":14,"target":13,"value":3},
+      //  {"source":13,"target":11,"value":3},
+       {"source":14,"target":16,"value":2},
+      //  {"source":16,"target":11,"value":2},
+       {"source":1,"target":7,"value":2},
+       {"source":4,"target":8,"value":2},
+      //  {"source":8,"target":7,"value":3},
+      //  {"source":12,"target":10,"value":1},
+       {"source":2,"target":7,"value":3},
+      //  {"source":7,"target":4,"value":1},
+      //  {"source":4,"target":3,"value":1},
+       {"source":3,"target":5,"value":1},
+       {"source":5,"target":8,"value":1},
+      //  {"source":8,"target":6,"value":1},
+       {"source":6,"target":9,"value":1},
+      //  {"source":8,"target":1,"value":1},
+       {"source":11,"target":17,"value":1},
+       {"source":17,"target":18,"value":1},
+      //  {"source":16,"target":13,"value":1},
+       {"source":0,"target":2,"value":1},
+       {"source":6,"target":8,"value":2},
+       {"source":11,"target":13,"value":1},
+       {"source":13,"target":16,"value":1}
+    ]
+
+
+
+			// 	"links": [{
+			// 	"source": 0,
+			// 	"target": 2,
+			// 	"value": 25
+			// }, {
+			// 	"source": 1,
+			// 	"target": 2,
+			// 	"value": 5
+			// }, {
+			// 	"source": 1,
+			// 	"target": 3,
+			// 	"value": 20
+			// }, {
+			// 	"source": 2,
+			// 	"target": 4,
+			// 	"value": 29
+			// }, {
+			// 	"source": 2,
+			// 	"target": 5,
+			// 	"value": 1
+			// }, {
+			// 	"source": 3,
+			// 	"target": 4,
+			// 	"value": 10
+			// }, {
+			// 	"source": 3,
+			// 	"target": 5,
+			// 	"value": 2
+			// }, {
+			// 	"source": 3,
+			// 	"target": 6,
+			// 	"value": 8
+			// }, {
+			// 	"source": 4,
+			// 	"target": 7,
+			// 	"value": 39
+			// }, {
+			// 	"source": 5,
+			// 	"target": 7,
+			// 	"value": 3
+			// }, {
+			// 	"source": 6,
+			// 	"target": 7,
+			// 	"value": 8
+			// }]
+
+			};
+		};
+
+
+		showSankey(getData());
+		</script>
+	</body>
+</html>z

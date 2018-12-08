@@ -1,0 +1,860 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by TEMPLATED
+http://templated.co
+Released for free under the Creative Commons Attribution License
+
+Name       : StoneWork 
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20140228
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>IDS Final Project</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="http://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet" />
+	<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+	<style>
+		#wrap { width: 100%; height: 490px; padding: 0; overflow: hidden; }
+#frame { width: 100%; height: 520px; border: 1px solid black; }
+#frame { zoom: 0.75; -moz-transform: scale(0.75); -moz-transform-origin: 0 0; }
+</style>
+	<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+</head>
+
+<body>
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#">IDS - Fall '18</a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<!-- <li class="active"><a href="#header-wrapper" accesskey="1" title="">Top</a></li> -->
+					<li><a href="#motivation" accesskey="1" title="">Motivation</a></li>
+					<li><a href="#objectives" accesskey="2" title="">Objectives</a></li>
+					<li><a href="#about-dataset" accesskey="3" title="">About Dataset</a></li>
+					<li><a href="#quality" accesskey="4" title="">Data Quality</a></li>
+					<li><a href="#exploratory" accesskey="5" title="">Data Exploration</a></li>
+					<li><a href="#data-analysis" accesskey="6" title="">Data Analysis</a></li>
+					<li><a href="#conclusions" accesskey="7" title="">Conclusions</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div id="banner" class="container">
+		<div class="title" style="width: 80%; margin-left: 10%;">
+			<h2>Visualizing student learning pathways to enable data-driven instructional redesign.</h2>
+			<p>Final Project of 05-839: Interactive Data Science</p>
+			<span class="byline">Shivang Gupta, Hao Li, Kexin Yang</span>
+		</div>
+		<ul class="actions">
+			<li><a href="#" class="button">Scroll Down V</a></li>
+		</ul>
+	</div>
+
+	<!-- <section id="overview"></section> -->
+
+	<section id="motivation">
+		<div id="wrapper">
+			<div id="three-column" class="container">
+				<div class="title">
+					<h2>Motivation</h2>
+					<span class="byline">As students of the <a href="http://metals.hcii.cmu.edu/" target="_blank">METALS</a> program,
+						we are particularly interested in learning analytics. </span>
+				</div>
+				<div class="boxA">
+					<span><img class="img-responsive" src="images/confused.png"></span>
+					<p><strong><a href="http://pslcdatashop.web.cmu.edu" target="_blank">DataShop</a> Data can be confusing.</strong><br /><br>The
+						PSLC DataShop is a repository of educational data. It serves as the hub for all data collected from the Open
+						Learning Initiative (OLI) and could serve as a great tool for educational researchers, since it provides a vast
+						variety of analytic tools. </p>
+					<p>However, for instructional designers, it is too complicated to use, in that it is not easy to draw insights in
+						just a few clicks and discover what can be improved. </p>
+					<!-- <a href="#" class="button button-alt">More Info</a> -->
+				</div>
+				<div class="boxB">
+					<span><img class="img-responsive" src="images/search.png"></span>
+					<p><strong>Courses need to be examined on both micro and macro scale.
+						</strong><br>Learning Curve Analysis and KC Model Analysis are the commonly used and powerful tools for analysing
+						the course on a relatively micro level. They involve student transaction data and student step data. However, a
+						macro level analysis is also needed for the instructor to see a broader picture of the course and gain insights
+						from it. </p>
+					<p>
+						It is also extremely difficult to garner insights about the way students progress through a course as DataShop
+						data is not easy to parse without code.
+					</p>
+					<!-- <a href="#" class="button button-alt">More Info</a> -->
+
+				</div>
+				<div class="boxC">
+					<span><img class="img-responsive" src="images/student.png"></span>
+					<p> <strong>Different student approaches to online courses arenot well understood.</strong><br>Depending on prior
+						domain knowledge, past experience with online learning environments and other factors, students progress through
+						courses in a number of different ways and analyzing data from students movements can allow us to understand the
+						learner profile in more detail. </p>
+					<!-- <a href="#" class="button button-alt">More Info</a> -->
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="objectives">
+		<div id="welcome">
+			<div class="container">
+				<div class="title">
+					<span class="byline">Our primary objective:</span>
+					<h2>Can we help instructional designers make data driven decisions by visualizing learning pathways through online
+						courses?</h2>
+				</div>
+				<p style="text-align:left; width: 70%;margin-left:25%;">We broke down our primary objective into the following
+					questions:</p>
+				<ul style="text-align:left; width: 70%;margin-left:25%;">
+					<li>- What are the common pathways students take in a course?</li>
+					<li>- How are learning pathways correlated with students achievements?</li>
+					<li>- How does student behavior (in terms of completion) affect performance?</li>
+				</ul>
+				<p style="text-align:left; width: 70%;margin-left:25%;">Further, we tried to answer more specific questions under
+					each visualization:</p>
+				<ul style="text-align:left; width: 70%;margin-left:25%;">
+					<li>- Do high achieving students take similar pathways?</li>
+					<li>- Are there common pathways between all students?</li>
+					<li>- What are some features of students learning pathways?</li>
+					<li>- Which problems do many student tend to make error on?</li>
+					<li>- Which students performed badly?</li>
+					<li>- For those students who performed badly, which part do they perform particularly badly? </li>
+				</ul>
+
+
+
+				<!-- 
+				<ul class="actions">
+					<li><a href="#" class="button">Etiam posuere</a></li>
+				</ul> -->
+			</div>
+		</div>
+	</section>
+
+	<section id="about-dataset">
+		<div id="wrapper">
+			<div id="three-column" class="container">
+				<div class="title">
+					<h2>The Data</h2>
+					<span class="byline">Collection and Cleaning </span>
+				</div>
+				<div class="boxX">
+					<span class="boxSpan"><img class="img-responsive" src="images/python.jpg"><br><br><br></span>
+					<span class="boxP">
+						<p><strong>Course: Introduction to Python, Spring 2016@CMU</strong><br />The data is from the Introduction to
+							Principles of Computing with Python course, a blended learning course that has both online and offline
+							components. This course is primarily for undergraduate students at CMU and the particular data that we are using
+							is from the summer term of 2016. A total of 55 student participated in this course. </p>
+					</span>
+				</div>
+				<br><br>
+				<div class="boxX">
+					<span class="boxSpan"><br><br><br><br><br><br><br><br><img class="img-responsive" src="images/oli.png"></span>
+					<span class="boxP"><br>
+						<p><strong>Source: Open Learning Initiative</strong><br />The log data of the online course is auto-generated by
+							the OLI platform, and stored in DataShop. The data includes Over 10,000 steps within 269 problems across 20
+							modules. </p><br /><br />
+					</span>
+					<!-- <a href="#" class="button button-alt">More Info</a> -->
+				</div>
+				<br /><br />
+				<div class="boxX">
+					<span class="boxSpan" style="margin-left:50px;"><br><br><br><br><img class="img-responsive" src="images/coding.png">
+					</span>
+					<span class="boxP">
+						<p>Interaction data for this course is in the standard DataShop/OLI format with all student-problem, student-step
+							and student-transaction level interactions being recorded. Student performance data (beyond the pre and post
+							tests) was not available directly on OLI but we were able to get it from the professor directly. <br /><br />
+
+							To further clean the data and improve the quality: firstly, we eliminated all the columns in the student-problem
+							dataset that are not needed. After that, we joined the two dataset together on anonymous student id. Looking
+							further into the data, we found a module on academic integrity and ethics with problems that are not relevant to
+							the actual learning, thus we also dropped those rows. Finally, we dropped all rows that contains null values.
+						</p>
+					</span>
+					<!-- <a href="#" class="button button-alt">More Info</a> -->
+				</div>
+
+				<br />
+				<!-- <div class="boxX">
+					<span class="boxSpan"><img class ="img-responsive" src="images/python.png"></span>
+					<span class = "boxP"><p ><strong>Course: Introduction to Python</strong><br/><br></strong><br/><br>The data is from the Introduction to Principles of Computing with Python course, a blended learning course that has both online and offline components. This course is primarily for undergraduate students at CMU and the particular data that we are using is from the summer term of 2016. A total of 55 student participated in this course. The log data of the online course is auto-generated by the OLI platform, and stored in DataShop. The data includes Over 10,000 steps within 269 problems across 20 modules. </p>
+						</span>
+					<a href="#" class="button button-alt">More Info</a> -->
+			</div>
+		</div>
+	</section>
+
+
+
+	<section id="quality">
+		<div id="welcome">
+			<div class="container">
+				<div class="title">
+					<!-- <span class="byline">Our primary objective:</span> -->
+					<h2>Data Quality</h2>
+				</div>
+				<h3 style="text-align:left; width: 70%;margin-left:15%;">Completeness: Is the data complete?</h3>
+				<p style="text-align:left; width: 70%;margin-left:15%;">
+					The data is complete in the way that it can satisfy our need for answering the questions, which means it has the
+					columns of: problem view, latency, first step, problem id, hint level, KC labels, and performance. However, within
+					the particular student interactions, there are some missing values that occur due to OLI errors or student input
+					errors. As OLI also only measures interaction time with the student, it is difficult to gauge students engagement
+					with the instructional materials.
+					<br><br>
+					During Exploratory Data analysis, we also discovered that only 28 out of the 55 students in the course had
+					completed the post-test, so we decided to accumulate other performance data to measure learning such as the final
+					exam which was completed by almost all students. A large number of students have not completed either the pre or
+					the post today.
+
+				</p>
+				<div style="width: 70%;margin-left:15%;">
+					<hr>
+				</div><br>
+
+				<h3 style="text-align:left; width: 70%;margin-left:15%;"><strong>aCcountability: Who has access to it?</strong></h3>
+				<p style="text-align:left; width: 70%;margin-left:15%;">
+					The course data on OLI is on DataShop and stored as “private”, as such it can only be accessed after seeking
+					permission from the owner, Norman Bier.
+					<br>
+					The student-performance data is confidential, only the instructor and administrators of the dataset have access to
+					it. We had to ask for special permission to access this data and it was anonymized before we received it.
+				</p>
+				<div style="width: 70%;margin-left:15%;">
+					<hr>
+				</div><br>
+
+				<h3 style="text-align:left; width: 70%;margin-left:15%;"><strong>Coherence: Is the data coherent?</strong></h3>
+				<p style="text-align:left; width: 70%;margin-left:15%;">
+					The data was not very coherent at first. But it has been cleaned by our team members. Firstly, we eliminated all
+					the columns in the student-problem dataset that are not needed. We then read the student-problem dataset and the
+					performance data into a pandas DataFrame. After that, we join the two dataset together on anonymous student id.
+					Looking further into the data, we found a module on academic integrity and ethics with problems that are not
+					relevant to the actual learning, thus we also dropped those rows. Finally, we dropped all rows that contain null
+					values.
+					<br><br>
+					This processing has made the data cleaner and more coherent.
+
+				</p>
+				<div style="width: 70%;margin-left:15%;">
+					<hr>
+				</div><br>
+				<h3 style="text-align:left; width: 70%;margin-left:15%;"><strong>Correctness: Is the data correct?</strong></h3>
+				<p style="text-align:left; width: 70%;margin-left:15%;">
+					The data is correct because all transaction and students behavior, including each step they take, how much time it
+					take for them to do each problem, and their hint-asking behaviors are accurately recorded down by the Datashop
+					automatically, minimizing the possibility of human error. By comparing OLI scores and completion rates with
+					performance data we were further able to check the validity of the data.
+					<br><br>
+					We verified this correctness by plotting a number of graphs and validating discrete statistics such as averages
+					and ranges of scores, etc. A detailed discussion of this processing is available in the Exploratory Analysis
+					section below.
+					<div style="width: 70%;margin-left:15%;">
+						<hr>
+					</div><br>
+				</p>
+			</div>
+		</div>
+	</section>
+
+
+	<!-- <div id="wrapper" class="wrapper-exp"> -->
+	<div id="exploratory" class="wrapper-exp">
+		<div id="three-column" class="container">
+			<div class="title">
+				<h2>Exploratory Analysis</h2>
+				<!-- <span class="byline">Initial  </span> -->
+			</div>
+
+			<h2>Data Pipeline </h2><br>
+			<span><img class="img-responsive" src="images/datap.png" style="width: 60%;"><br><br><br></span>
+			<br>
+			<div style="width: 70%;margin-left:15%;">
+				<hr>
+			</div><br>
+
+
+			<div class="boxX">
+				<h2>Descriptive Statistics </h2><br>
+
+				<span>
+					<p style="text-align:left; width:70%; margin-left:15%;">
+						Total number of problems attempted by students: <strong>10880</strong><br>
+						Modules in course: <strong>20</strong> (including Ethics Module)<br>
+						Number of problems: <strong>269</strong> (37 problems are from Ethics module)<br>
+						Number of students: <strong>55</strong> </p>
+				</span>
+				<span><img class="img-responsive" src="images/stats.png" style="width: 100%"><br><br><br></span>
+
+			</div>
+
+			<br>
+			<div style="width: 70%;margin-left:15%;">
+				<hr>
+			</div><br>
+
+			<div class="boxX">
+				<h2>Initial Graphing </h2>
+				<span><img class="img-responsive" src="images/ex1.png" style="width: 100%"><br><br><br></span>
+				<span style="text-align:left;">
+					<p>There is a strong correlation (m = 0.4912) between completion rate (percentage of questions completed on
+						OLI)and total score (final grade). This simple analysis validates the effectiveness of the course and highlights
+						a number of students who have high score but low completion rate, upon further analysis it was discovered that
+						these students have high pre-test scores. This makes sense as a high pretest score implies prior knowledge which
+						can justify high scores without high completion rate.
+				</span>
+
+			</div>
+
+			<br>
+			<div style="width: 70%;margin-left:15%;">
+				<hr>
+			</div><br>
+
+			<div class="boxX">
+				<h2>Bar Charts </h2>
+				<span><img class="img-responsive" src="images/ex2.png" style="width: 100%"><br><br><br></span>
+				<span style="text-align:left;">
+					<p>
+						We created a bar chart to analyze which modules were more commonly completed and to see if there was a variation
+						in the number of students per module as we hypothesized:
+				</span>
+
+			</div>
+
+			<br>
+			<div style="width: 70%;margin-left:15%;">
+				<hr>
+			</div><br>
+
+			<div class="boxX">
+				<h2>Measuring Transfer </h2>
+				<span><img class="img-responsive" src="images/ex3.png" style="width: 100%"><br><br><br></span>
+				<span style="text-align:left;">
+					<p>
+						Finally, we plotted the OLI completion rate and performance against performance on the written assessment to
+						verify if there was transfer between the two. We saw a very strong correlation between the performance on OLI
+						against the performance on written assessments, with the few outliers again being students who had performed well
+						on the pretest and did not have high completion rate due to this.
+				</span>
+
+			</div>
+			<br>
+			<div style="width: 70%;margin-left:15%;">
+				<hr>
+			</div><br>
+
+			<br />
+
+		</div>
+	</div>
+	<section id="data-analysis">
+		<div id="welcome" class="welcome-data">
+			<div class="container">
+				<div class="title">
+					<!-- <span class="byline">Our primary objective:</span> -->
+					<h2>Data Analysis</h2>
+					<h3>Sankey Diagrams</h3>
+				</div>
+
+				<p style="text-align:left; width: 70%;margin-left:15%;">
+
+					<strong>How to Use:</strong><br />
+					The nodes in the diagram represent the different modules of the course. The links represent the number of students
+					that move from one module to another. The solid links show forward movement and the dashed links represent when
+					students go back to a module after completing it the first time. The size of the nodes and links represent the
+					number of students who take that path. <br><br />
+					You can interact with the nodes and move them around to see links more clearly. Hovering over links will reveal
+					their counts in tooltips and hovering over nodes will highlight all source links to that node. Clicking on a node
+					will allow you to highlight all target links that go out from that node. Link highlights can be reset by clicking
+					any node. <br /><br />
+					<!-- By visualizing the different clusters of paths, students can be categorized based on their completion behavior.
+					From our analysis we found that, generall speaking, there will be one thick central path that most students will
+					follow, a small splinter cell of advanced students who will split early from the group to skip the introductory
+					lessons and a very small group of high effort students who will approach all modules. <br> 
+					The -->
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>D3.js Sankey Diagram to visualize flow of students
+							through <strong>Summer 2016</strong> course at a macro level:</strong></p>
+					<a href="sankey/index.html"><span><img class="img-responsive" src="images/sankey1.png" style="width: 100%"><br></span></a>
+					<p> click image to view full diagram</p>
+
+
+					<p style="text-align:left; width: 70%;margin-left:15%;">
+						<br>
+						<strong>Insights:</strong><br>
+						Following the general pattern, there is clear group of students who follow the recommended path as shown by the
+						thick link. At the top left of the graph it is also easy to see a number of advanced students who skip the
+						introduction lessons on loops and lists. Nodes which are small and pushed to the side like concurrency, common
+						errors and logic are also key aareas for intervention as not enough students are attempting these modules.<br><br>
+						Another interesting insight from this visualization is the idea that making decisions is linked to different
+						previous modules and being a complicated module results in students going back to other modules to recap as shown
+						by the large number of backwards links. The recommended intervention in this case would be to examine the
+						contents of the making decisions module to decided if it requires more scaffolding or whether recap notes from
+						other modules should be directly inserted into this.
+					</p>
+					<div style="width: 100%;">
+						<hr>
+					</div><br>
+
+					<p>We recreated the Sankey diagram for 2 other terms of the same course to verify how they have evolved. </p>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>D3.js Sankey Diagram to visualize flow of students
+							through <strong>Spring 2016</strong> course at a macro level:</strong></p>
+					<a href="sankey/index2.html"><span><img class="img-responsive" src="images/sankey2.png" style="width: 100%"><br></span></a>
+					<p> click image to view full diagram</p>
+
+
+
+					<p style="text-align:left; width: 70%;margin-left:15%;">
+						<strong>Insights:</strong><br>
+
+						In this version of the Sankey flow, we can see that there are far fewer modules and transactions in the Spring as
+						compared to summer. However, we can see two clear splits in the paths and can see that there are mny back links
+						into Iteration, meaning it probably need to be improved to promote far learning. <br>
+						<strong>Student attrition is also very clearly visible in this Sankey.</strong>
+
+					</p>
+					<div style="width: 100%;">
+						<hr>
+					</div><br>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>D3.js Sankey Diagram to visualize flow of students
+							through <strong>Fall 2016</strong> course at a macro level:</strong></p>
+					<a href="sankey/index3.html"><span><img class="img-responsive" src="images/sankey3.png" style="width: 100%"><br></span></a>
+					<p> click image to view full diagram</p>
+
+
+					<p style="text-align:left; width: 70%;margin-left:15%;">
+
+
+						<br><br>
+						<strong>Insights:</strong><br>
+						The fall course size was much larger than the other two terms (more than 4 times the number of students), hence
+						the abundance of links. Once again we immediately see the large link of students returning to the making
+						decisions module, hoghlighting that it is an area for improvement, even across terms. <br> Like we saw in the
+						summer, there is one clear path most students follow, an early group that skips introduction slides and
+						atttrition is clear. <br><br>
+						What is also obeserved is that many students skipped the post test and also the mid modules like Recursion, Data
+						Representation and Encryption which show as very small nodes. <br /><br>
+
+						As before, instructional designers should consider Scaffolding the course so that novice learners and advanced
+						learners can both take advatage of the online class.
+
+					</p>
+
+					<div style="width: 100%;">
+						<hr>
+					</div><br>
+
+					<div class="title">
+						<!-- <span class="byline">Our primary objective:</span> -->
+						<h3>Individual Student Pathways</h3>
+					</div>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>Tableau visualization for each student's path at a
+							micro level.</strong></p>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>How to Use:</strong><br />
+						<u>X axis</u>: Week of problem start time<br>
+						<u>Y axis</u>: Student ID and total score<br>
+						<u>Size:</u> Problem view (longer the bar is, the more time they view)<br>
+						<u>Color:</u> Different color means different problem hierarchy. <br>
+						<u>Interactivity:</u> You can mouse over the graphic to see its details.<br>
+					</p>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>Questions addressed by this visualization:</strong><br />
+						- Do high achieving students take similar pathways?<br>
+						- Are there common pathways between all students?<br>
+						- What are some features of students learning pathways?
+					</p>
+
+
+					<div class='tableauPlaceholder' id='viz1544304118483' style='position: relative'><noscript><a href='#'><img alt=' '
+								 src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ID&#47;IDS-Python_1&#47;IndividualStudentPathways&#47;1_rss.png'
+								 style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+							<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+							<param name='embed_code_version' value='3' />
+							<param name='site_root' value='' />
+							<param name='name' value='IDS-Python_1&#47;IndividualStudentPathways' />
+							<param name='tabs' value='no' />
+							<param name='toolbar' value='yes' />
+							<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ID&#47;IDS-Python_1&#47;IndividualStudentPathways&#47;1.png' />
+							<param name='animate_transition' value='yes' />
+							<param name='display_static_image' value='yes' />
+							<param name='display_spinner' value='yes' />
+							<param name='display_overlay' value='yes' />
+							<param name='display_count' value='yes' /></object></div>
+					<script type='text/javascript'>                    var divElement = document.getElementById('viz1544304118483'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+
+					<p style="text-align:left; width: 70%;margin-left:15%;">
+						<br>
+
+						<strong>Evaluation:</strong><br>
+						Since our data is relatively complex, that has different dimensions, this graphics is still not self-
+						explanatory.
+						But with a little bit of explanation, it should be much more interpretable than a bunch of numbers.
+
+					</p>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;">
+						<br>
+
+						<strong>Insights:</strong><br>
+						<div style="text-align:left; width: 70%;margin-left:15%;">
+							<p>
+								1) Low achieving students started struggling very early, on their first course module- For loops. (The third
+								block on the graph, because the first two block are introduction and pretest). We can see from the brown block
+								that showed for low achieving students, these are much longer, which means they have been visiting that for
+								loops module a lot of times. This early struggling shows they are struggling, and may indicate that they may
+								not do as well as others. So educators can take this as a sign, and give timely help to these struggling
+								students who are using more time than others.
+							</p><br>
+							<p>
+								2) High achieving students (judging from the total- final performance), tend to do more modules. As we can see
+								from the visual, in the upper part, there are more colorful blocks, which means these students visited modules
+								more completely. We can also see that the time they take are more balanced. While if you look at the
+								low-achieving students, you can see that there are more white space in their pathways, which means they have
+								missed a lot of modules. This can lead to drop in their final performance. Also, as you can see from the
+								graphics, the time use of low-achieving students are not as balanced as high-achieving ones. There tend to be
+								some really long blocks, which could possibly mean that they are struggling.</p>
+							<p><br>
+								3) However, there are also some anomaly, such as the one low-achieving student who scored 70 but did almost all
+								modules. This could be a indicator of wheel-spinning.<br /><br />
+							</p>
+
+						</div>
+
+					</p>
+					<div style="width: 100%;">
+						<hr>
+					</div><br>
+
+
+
+					<div class="title">
+						<!-- <span class="byline">Our primary objective:</span> -->
+						<h3>Module Level Error Analysis</h3>
+					</div>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>Tableau visualization to identify modules which
+							are
+							problem areas.</strong></p>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>How to Use:</strong><br />
+						<u>X axis</u>: Total Student ID + Student final score<br>
+						<u>Y axis</u>: Problem hierarchy<br>
+						<u>Size:</u> Completion rate(the higher the completer rate, the bigger the squares are)<br>
+						<u>Color:</u> The greener it is, the lower the error rate, the redder it is, the higher the error rate.<br>
+						<u>Interactivity:</u> You can mouse over the graphic to see its details and click on different elements to select
+						them. <br>
+
+					</p>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>Questions addressed by this visualization:</strong><br />
+						- Which problems do students tend to make errors on frequently?<br>
+						- Which students performed badly?<br>
+						- For those students who performed badly, which part of the course do they perform particularly badly on?
+					</p>
+
+
+
+					<div class='tableauPlaceholder' id='viz1544303920809' style='position: relative'><noscript><a href='#'><img alt=' '
+								 src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ID&#47;IDS-Python_1&#47;ModuleLevelErrorAnalysis&#47;1_rss.png'
+								 style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+							<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+							<param name='embed_code_version' value='3' />
+							<param name='site_root' value='' />
+							<param name='name' value='IDS-Python_1&#47;ModuleLevelErrorAnalysis' />
+							<param name='tabs' value='no' />
+							<param name='toolbar' value='yes' />
+							<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ID&#47;IDS-Python_1&#47;ModuleLevelErrorAnalysis&#47;1.png' />
+							<param name='animate_transition' value='yes' />
+							<param name='display_static_image' value='yes' />
+							<param name='display_spinner' value='yes' />
+							<param name='display_overlay' value='yes' />
+							<param name='display_count' value='yes' /></object></div>
+					<script type='text/javascript'>                    var divElement = document.getElementById('viz1544303920809'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+
+
+
+					<p style="text-align:left; width: 70%;margin-left:15%;">
+						<br>
+
+						<strong>Evaluation and Insights:</strong><br>
+						<div style="text-align:left; width: 70%;margin-left:15%;">
+							<p>This is not a transparent visualization, and probably also not too self-explanatory. But it has its
+								advantage
+								in that:<br /> <br />
+								1) It is showing four variables at the same time: <br />
+								&nbsp;&nbsp;&nbsp;&nbsp; a) Student id<br />
+								&nbsp;&nbsp;&nbsp;&nbsp; b) normalized error<br />
+								&nbsp;&nbsp;&nbsp;&nbsp; c) final performance <br />
+								&nbsp;&nbsp;&nbsp;&nbsp; d) problem name. <br />
+								Therefore it is a very comprehensive graphic which has a lot of information in it.</p><br />
+							<p>2) It can visualize everybody’s final performance in a very conspicuous way: by using red and green. The
+								darker the green, means the students performed better. The darker the red, means the students perform worse.
+								This is correlated with our common sense that red signals warning, risks and green signals passing and safety.
+								Therefore, from the graphics, we can easily see which students are not performing well. And which particular
+								module are they struggling with.</p>
+							<p>3) One example to understand how to use this visualization would be student with id AE. The large size of
+								squares for this student shows the completion rate is high. However, we can see from the axis that the total
+								score for this student is poor (around 72% which is well below class average). <br>Upon examining the
+								visualization we can see that this is due to the fact that the student has a very high error rate and is
+								attempting questions incorrectly at a high frequency. We can then use the visualization to pinpoint the areas
+								that the student needs to improve in such as Time-Efficiency, Encryption and Lists. </p>
+							<p>4) Another way to use this visualization is to examine a particular module across students. For example: The
+								Time-efficiency module is clearly very troublesome for low scoring students while high scoring students tend to
+								not make errors on practice problems for this module. On the other hand the Encryption module seems to be hard
+								for everyone and would require some re-evaluation to understand why. </p>
+							</div>
+
+
+					</p>
+
+					<!-- <p style="text-align:left; width: 70%;margin-left:15%;">
+						<br>
+						
+						<strong>Insights:</strong><br>
+							<ol style="text-align:left; width: 70%;margin-left:15%;">
+								<li>
+									1)	Low achieving students started struggling very early, on their first course module- For loops. (The third block on the graph, because the first two block are introduction and pretest). We can see from the brown block that showed for low achieving students, these are much longer, which means they have been visiting that for loops module a lot of times. This early struggling shows they are struggling, and may indicate that they may not do as well as others. So educators can take this as a sign, and give timely help to these struggling students who are using more time than others.
+								</li><br>
+								<li>
+								2)	High achieving students (judging from the total- final performance), tend to do more modules. As we can see from the visual, in the upper part, there are more colorful blocks, which means these students visited modules more completely. We can also see that the time they take are more balanced. 
+								While if you look at the low-achieving students, you can see that there are more white space in their pathways, which means they have missed a lot of modules. This can lead to drop in their final performance. Also, as you can see from the graphics, the time use of low-achieving students are not as balanced as high-achieving ones. There tend to be some really long blocks, which could possibly mean that they are struggling.</li>
+								<li><br>
+		
+								 3) 	However, there are also some anomaly, such as the one low-achieving student who  scored 70 but did almost all modules. This could be a indicator of wheel-spinning.
+								</li>	
+		
+							</ol>
+		
+						</p> --><br />
+					<div style="width: 100%;">
+						<hr>
+					</div><br>
+
+
+					<div class="title">
+						<!-- <span class="byline">Our primary objective:</span> -->
+						<h3> Correlation - Evaluation of Course</h3>
+					</div>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>Here, we create an evaluative visualization to
+							verify that the course is working in the intended way. This visualization and the related statistical analysis
+							shows that student completion rate is strongly positively correlated with their final performance, and that
+							completion rate is more telling than time spent on problems, which was a surprising insight! </strong></p>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>How to Use Chart 1: Completion Rate</strong><br />
+						<u>X axis</u>: Average completion rate <br>
+						<u>Y axis</u>: Average Total (students' final performance)<br>
+						<u>Size:</u> Time spent on problems<br>
+						<u>Color:</u> The more orange it is the less time students spend, the more blue it is, the more time students
+						spend.<br>
+						<u>Interactivity:</u> You can mouse over the graphic to see its details.<br>
+					</p>
+
+					<div class='tableauPlaceholder' id='viz1544291316094' style='position: relative'><noscript><a href='#'><img alt=' '
+								 src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ID&#47;IDS-Python_1&#47;CompletionRatePerformance&#47;1_rss.png'
+								 style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+							<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+							<param name='embed_code_version' value='3' />
+							<param name='site_root' value='' />
+							<param name='name' value='IDS-Python_1&#47;CompletionRatePerformance' />
+							<param name='tabs' value='no' />
+							<param name='toolbar' value='yes' />
+							<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ID&#47;IDS-Python_1&#47;CompletionRatePerformance&#47;1.png' />
+							<param name='animate_transition' value='yes' />
+							<param name='display_static_image' value='yes' />
+							<param name='display_spinner' value='yes' />
+							<param name='display_overlay' value='yes' />
+							<param name='display_count' value='yes' /></object></div>
+					<script type='text/javascript'>                    var divElement = document.getElementById('viz1544291316094'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong>How to Use Chart 2: Time Spent</strong><br />
+						<u>X axis</u>: Time spent on problems<br>
+						<u>Y axis</u>: Average Total (students' final performance)<br>
+						<u>Size:</u> Time spent on problems<br>
+						<u>Color:</u> The more orange it is the less time students spend, the more blue it is, the more time students
+						spend.<br>
+						<u>Interactivity:</u> You can mouse over the graphic to see its details such as line equation.<br>
+					</p>
+
+					<div class='tableauPlaceholder' id='viz1544291691907' style='position: relative'><noscript><a href='#'><img alt=' '
+								 src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ID&#47;IDS-Python_1&#47;TimeSpentPerformance&#47;1_rss.png'
+								 style='border: none' /></a></noscript><object class='tableauViz' style='display:none;'>
+							<param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+							<param name='embed_code_version' value='3' />
+							<param name='site_root' value='' />
+							<param name='name' value='IDS-Python_1&#47;TimeSpentPerformance' />
+							<param name='tabs' value='no' />
+							<param name='toolbar' value='yes' />
+							<param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;ID&#47;IDS-Python_1&#47;TimeSpentPerformance&#47;1.png' />
+							<param name='animate_transition' value='yes' />
+							<param name='display_static_image' value='yes' />
+							<param name='display_spinner' value='yes' />
+							<param name='display_overlay' value='yes' />
+							<param name='display_count' value='yes' /></object></div>
+					<script type='text/javascript'>                    var divElement = document.getElementById('viz1544291691907'); var vizElement = divElement.getElementsByTagName('object')[0]; vizElement.style.width = '100%'; vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'; var scriptElement = document.createElement('script'); scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'; vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+
+
+
+					<p>These are observational studies that are conducted in an ex-post facto manner as the data is already available
+						on DataShop.</p>
+
+					<p style="text-align:left; width: 70%;margin-left:15%;"><strong><u>Hypotheses to be tested: </u></strong><br /><br />
+
+
+						<strong>Null Hypothesis 1:</strong> There is no statistically significant relationship between completion rate of
+						problems and students’ final performance.<br>
+						<strong>Independent Variable:</strong> Completion Rate (percentage of course materials completed)<br>
+						<strong>Dependent Variable:</strong> Total Score (Final performance)<br><br>
+
+
+						<strong>Null Hypothesis 2:</strong> There is no statistically significant relationship between students’ time
+						spent and students’ final performance.<br>
+						<strong>Independent Variable:</strong>Time spent (Number of problems * avg. time spent per problem)<br>
+						<strong>Dependent Variable:</strong>Total Score (Final performance)
+
+						<br>
+					</p>
+
+
+					<br>
+					<p style="width:70; margin-left:15%; text-align:left;">
+						<strong>Statistical Evidence:</strong><br>
+
+						For hypothesis 1: <br />
+
+						<!-- <img class="img-responsive" src="images/hyp1.png" style="width: 70%;"></img><br /> -->
+						Equation: <strong>Avg(Total) = 0.142344 * Time-Spent + 76.8668<br></strong>
+						Correlation Value:<strong> 0.142344</strong> <br />
+						P value:<strong> 0.0029142 **</strong> <br />
+						Evaluation:<strong> The correlation value is more prominent when some outliers are removed as can be experimented
+							interactively on the graph above. The key reason behind the outliers is the high pre-test score some students
+							have. Due to vast prior knowledge, they are not engaged in the course but still get a high total score. </strong>
+						<br />
+						Conclusion:<strong> Reject null hypothesis. Completion rate of problems is positively correlated with students’
+							final performance.</strong>
+
+						<br><br>
+
+						For hypothesis 2: <br />
+
+						<!-- <img class="img-responsive" src="images/hyp2.png" style="width: 70%;"></img><br /> -->
+						Equation: <strong>Avg(Total) = 0.00833 * Time-Spent + 84.4179</strong><br>
+						Correlation Value:<strong> 0.000833</strong> <br />
+						P value:<strong> 0.782187</strong> <br />
+						Evaluation:<strong> The time spent on questions is not a good indicator of performance in any way. This is
+							interesting as one would expect time spent to be directly correlated with completion rate, which is not the case
+							at all. </strong> <br />
+						Conclusion:<strong> Accept null hypothesis. Students’ time spent is not correlated with students’ final
+							performance.</strong>
+					</p><br /><br />
+				</p>
+
+				<div style="width: 100%;">
+					<hr>
+				</div><br>
+
+			</div>
+
+		</div>
+	</section>
+
+	<section id="conclusions">
+		<div id="wrapper">
+			<div id="three-column" class="container">
+				<div class="title">
+					<h2>Conclusion</h2>
+					<span class="byline">Observations, Insights, Limitations and Future Work </span>
+				</div>
+
+				<h3>Observations and Insights</h3>
+				<div class="boxX">
+					<p>Completion rate is a better indicator than time spent to predict a students’ final performance on the course,
+						supported by statistics of correlation variable (slope) and p value. </p>
+				</div>
+				<div class="boxX">
+
+					<p>low-achieving students tend to start struggling very early on about some relatively easy modules, such as “for
+						loop” in this course. </p>
+
+				</div>
+				<div class="boxX">
+
+					<p>In this course while most people did badly in the pre-test, the majority of them did better in their post-test.</p>
+
+					<!-- <a href="#" class="button button-alt">More Info</a> -->
+				</div>
+
+				<h3>Generalization Potential</h3>
+				<div class="boxX">
+					<p>These visualization have been designed to be as easy to create for a non-practitioner of data science. The aim of this part of the project is to create a simple set of steps that any instructional designer can use to create these visualizations from any DataShop data set. </p>
+					<p>For the first visualization (Sankey diagram) the data needs to be cleaned using the data pipeline mentioned above. We plan to open source the code used in this project to clean the data into the required format (which uses Python and Pandas). Currently weightage on the Sankey diagram is done with just the student count, but student performance, time spent, and other metrics could also be used to weight the links depending on the domain.</p>
+					<p>For the other visualizations, Tableau is a ready to use format and our visualization workbooks are public and can be accessed by anyone. In order for the visualizations to work in a plug and play manner, data shop data will need to be exported (at the Student-Problem level) and then combined with performance data. While we have combined a number of performance parameters, both offline and online, in our analysis, the visualizations will still work if this combination is done simply by joining student final scores (out of 100) with their student Ids on the downloaded DataShop file. </p>
+					<p>This generalization potential can be seen above where we re-created the Sankey diagrams for two other semesters of the Introduction to Programming course, and each of these visualizations was created without writing any code, in less than 30 minutes. </p>
+				</div>
+
+
+
+				<h3>Limitations and Future Work</h3>
+				<div class="boxX">
+					<p>This is only one course in several specific time periods, with limited students. The conclusion about learning
+						pathways can benefit from larger amount of data to yield more explicit and solid pattern.</p>
+
+					<p>It is hard to judge the generalizability of our conclusion three because it is largely specific to this course.
+					</p>
+					<p>The Sankey diagram is capable of displaying a macro picture, but in its current form it is difficult to
+						generalize intuition from the diagram. </p>
+
+					<p>For online course with more than hundreds of students, such as MOOCs, further data aggregation is needed to
+						avoid high complexity of the sankey diagram.</p>
+
+					<p>In the future, it may be possible to visualize for different courses across different domains to see if common
+						pattern exist about learning pathways. Depending on further analysis and user studies with instructional
+						designers, the Sankey diagram can be modified to include color and other features to communicate more information
+						at a glance.</p>
+
+					<p>We also plan to move these visualizations into the LearnSphere environment to allow direct integration with all
+						DataShop datasets.</p>
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+	<!-- Ending content here ...? -->
+	</div>
+	</div>
+
+	<div id="copyright" class="container">
+		<p>&copy; Shivang Gupta, Hao Li, Kexin Yang . All rights reserved. <br><a href="http://hcii.cmu.edu"> Human Computer
+				Interaction Institute - Carnegie Mellon University</a><br>Photos by <a href="http://freepik.com/">Freepik</a> |
+			Design by <a href="http://templated.co" rel="nofollow">Templated</a>.</p>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!-- http://bl.ocks.org/soxofaan/7c96560677ead0425fe7 -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sankey Diagram</title>
+  <style>
+
+    body {
+      font-family: sans-serif;
+    }
+
+    .node rect {
+      fill-opacity: .9;
+      shape-rendering: crispEdges;
+    }
+
+    .link {
+      fill: none;
+      stroke: #024;
+      stroke-opacity: .2;
+    }
+
+    .link:hover {
+      stroke-opacity: .5;
+    }
+
+    .link.backwards {
+      stroke: #402;
+      stroke-dasharray: 9,1;
+    }
+
+  </style>
+</head>
+<body>
+<h1>D3.js Sankey Diagram to visualize flow of students through Fall 2016 course at a macro level:</h1>
+<div id="data-set-select"></div>
+<div id="chart"></div>
+
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="sankey.js"></script>
+<script>
+
+  // Some setup stuff.
+  var margin = {top: 150, right: 20, bottom: 20, left: 80};
+  var width = 1800 - margin.left - margin.right;
+  var height = 900 - margin.top - margin.bottom;
+  var color = d3.scale.category20();
+  var clicked = false;
+
+  // SVG (group) to draw in.
+  var svg = d3.select("#chart").append("svg")
+          .attr({
+            width: width + margin.left + margin.right,
+            height: height + margin.top + margin.bottom
+          })
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  var linksGroup = svg.append("g").attr('class', 'links');
+  var nodesGroup = svg.append("g").attr('class', 'nodes');
+
+  // Set up Sankey object.
+  var sankey = d3.sankey()
+          .nodeWidth(20)
+          .nodePadding(100)
+          .size([width, height-100]);
+
+  // Get path data generator
+  var path = sankey.link();
+
+
+  // Callback to draw on a data set.
+  function sankeyDraw(data) {
+
+    sankey.nodes(data.nodes)
+            .links(data.links)
+            .sinksRight('sinksRight' in data ? data.sinksRight : true)
+            .layout(32);
+
+    // Draw the links.
+    var links = linksGroup.selectAll('.link').data(data.links);
+    // Enter
+    links.enter()
+            .append("path")
+            .attr('class', 'link');
+    // Enter + Update
+    links.attr('d', path)
+            .style("stroke-width", function (d) {
+              return Math.max(1, d.dy/2);
+            });
+    links.classed('backwards', function (d) { return d.target.x < d.source.x; });
+
+    links.append("title")
+            .text(function (d) {
+              return d.source.name + " to " + d.target.name + " = " + d.value;
+            });
+
+    links.attr("id", function (d, i) {
+        d.id = i;
+        return "link-" + i;
+      });
+    // Exit
+    links.exit().remove();
+
+    // Draw the nodes.
+    var nodes = nodesGroup.selectAll('.node').data(data.nodes);
+    // Enter
+    var nodesEnterSelection = nodes.enter()
+            .append("g")
+            .attr('class', 'node')
+            .on('mouseover', highlight_target_links)
+            .on('click', highlight_source_links)
+            // .on('mouseout', dehighlight_node_links)
+            .on('mouseout', clearHighlight)
+            .call(d3.behavior.drag()
+            .origin(function(d) { return d; })
+            .on("drag", dragmove));
+    nodesEnterSelection.append("rect")
+            .attr('width', sankey.nodeWidth())
+            .append("title");
+    nodesEnterSelection.append("text")
+            .attr('x', sankey.nodeWidth() / 2)
+            .attr('dy', "4em")
+            .attr("text-anchor", "right")
+            .attr('transform', null);
+
+    // Enter + Update
+    nodes
+            .attr('transform', function (d) {
+              return "translate(" + d.x + "," + d.y + ")";
+            });
+    nodes.select('rect')
+            .attr('height', function (d) {
+              return d.dy;
+            })
+            .style('fill', function (d) {
+              return d.color = color(d.name.replace(/ .*/, ""));
+            })
+            .on('click', console.log('clickingg'))
+            .style('stroke', function (d) {
+              return d3.rgb(d.color).darker(2);
+            });
+    nodes.select('rect').select('title')
+            .text(function (d) {
+              return d.name + " - Completed By: " +d.value + " students";
+            });
+    nodes.select('text')
+            .attr('y', function (d) {
+              return d.dy / 2;
+            })
+            .text(function (d) {
+              return d.name;
+            });
+
+    // Exit
+    nodes.exit().remove();
+
+    function dragmove(d) {
+      // console.log('dragging')
+        d3.select(this).attr("transform", "translate(" + d.x + "," + (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) + ")");
+        sankey.relayout();
+        links.attr("d", path);
+      }
+
+  // highlighting nodes and links
+    function highlight_target_links(node, i) {
+      // console.log("highlighting nodes");
+
+      // var remainingNodes = [],
+      //   nextNodes = [];
+
+      // var stroke_opacity = 0;
+      //   d3.select(this).attr("data-clicked", "1");
+      //   stroke_opacity = 0.6;
+
+      // var traverse = [{
+      //   linkType: "sourceLinks",
+      //   nodeType: "target"
+      // }, {
+      //   linkType: "targetLinks",
+      //   nodeType: "source"
+      // }];
+
+      // traverse.forEach(function (step) {
+      //   node[step.linkType].forEach(function (link) {
+      //     remainingNodes.push(link[step.nodeType]);
+      //     highlight_link(link.id, stroke_opacity);
+      //   });
+
+        
+      //   while (remainingNodes.length) {
+      //     nextNodes = [];
+      //     remainingNodes.forEach(function (node) {
+      //       node[step.linkType].forEach(function (link) {
+      //         // console.log(link);
+              
+      //         // console.log("source", link.source.value);
+      //         // console.log("target", link.target.value);
+      //         // if (nextNodes.indexOf(link[step.nodeType]) == -1 || nextNodes.indexOf(link[step.nodeType]) == 1) {
+
+      //         if (nextNodes.indexOf(link[step.nodeType]) === -1) {
+      //           nextNodes.push(link[step.nodeType]);
+      //           highlight_link(link.id, stroke_opacity);
+      //         }
+      //       });
+      //     });
+
+      //     remainingNodes = nextNodes;
+      //   }
+      // });
+      // console.log("hikkk");
+      
+          node["targetLinks"].forEach(function(srcLnk){
+            console.log(srcLnk)
+              d3.select("#link-" +srcLnk.id).style("stroke-opacity", 0.8);
+          });
+      
+    }
+
+    function highlight_source_links(node, i) {
+      if(clicked==false){
+          node["sourceLinks"].forEach(function(srcLnk){
+            console.log(srcLnk)
+              d3.select("#link-" +srcLnk.id).style("stroke-opacity", 0.8);
+          });
+          clicked=true;
+        }
+        else{
+          console.log("CLICKED TRUE")
+
+          clicked = false;
+          clearHighlight();
+        }
+      
+    }
+
+    function highlight_paths(stroke_opacity) {
+      console.log("hi");
+        return function(d,i){
+            d.sourceLinks.forEach(function(srcLnk){
+                d3.select("#link"+srcLnk.id).style("stroke-opacity", stroke_opacity);
+            });
+            d.targetLinks.forEach(function(srcLnk){
+                d3.select("#link"+srcLnk.id).style("stroke-opacity", stroke_opacity);
+            });
+        }
+    }
+
+    function highlight_link(id, opacity) {
+      d3.select("#link-" + id).style("stroke-opacity", opacity);
+    }
+
+    function clearHighlight(){
+      if(clicked==false){
+        nodesGroup.selectAll('.node').style("stroke-opacity", 0.2);
+        linksGroup.selectAll('.link').style("stroke-opacity", 0.2);
+      }
+    }
+
+  }
+
+
+</script>
+<script src="fall16.js"></script>
+</body>
+</html>
