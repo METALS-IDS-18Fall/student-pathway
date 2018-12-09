@@ -2,6 +2,8 @@
 	{
 		height: 100%;
 		-ms-scroll-chaining: none;
+		zoom: 90%;
+		-moz-transform: scale(0.9);
 	}
 	
 	body
